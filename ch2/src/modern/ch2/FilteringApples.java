@@ -1,5 +1,7 @@
 package modern.ch2;
 
+import modern.ch2.policy.AppleFancyFormatterPolicyImpl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +42,15 @@ public class FilteringApples {
 			}
 		});
 		System.out.println(redApples2);
+
+		prettyPrintApple(inventory, new AppleFancyFormatterPolicyImpl());
+	}
+
+	public static void prettyPrintApple(List<Apple> inventory, AppleFormatterPolicy policy) {
+		for (Apple apple : inventory) {
+			String output = policy.print(apple);
+			System.out.println(output);
+		}
 	}
 
 	public static List<Apple> filterGreenApples(List<Apple> inventory) {
