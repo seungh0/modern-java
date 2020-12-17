@@ -5,6 +5,7 @@ import modern.ch2.policy.AppleFancyFormatterPolicyImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FilteringApples {
 
@@ -44,6 +45,12 @@ public class FilteringApples {
 		System.out.println(redApples2);
 
 		prettyPrintApple(inventory, new AppleFancyFormatterPolicyImpl());
+
+		List<Apple> greenApples3 = filter(inventory, (Apple a) -> Color.GREEN == a.getColor());
+		System.out.println(greenApples3);
+
+		List<Apple> greenApples4 = abstractFilter(inventory, (Apple a) -> Color.GREEN == a.getColor());
+		System.out.println(greenApples4);
 	}
 
 	public static void prettyPrintApple(List<Apple> inventory, AppleFormatterPolicy policy) {
@@ -88,6 +95,16 @@ public class FilteringApples {
 		for (Apple apple : inventory) {
 			if (p.test(apple)) {
 				result.add(apple);
+			}
+		}
+		return result;
+	}
+
+	public static <T> List<T> abstractFilter(List<T> list, Predicate<T> p) {
+		List<T> result = new ArrayList<>();
+		for (T e : list) {
+			if (p.test(e)) {
+				result.add(e);
 			}
 		}
 		return result;
