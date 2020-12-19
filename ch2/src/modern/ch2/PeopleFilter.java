@@ -3,6 +3,7 @@ package modern.ch2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class PeopleFilter {
 
@@ -17,6 +18,19 @@ public class PeopleFilter {
 
 		Thread t = new Thread(() -> System.out.println("Hello world"));
 		t.start();
+
+		List<Person> result2 = filter2(people, (Person p) -> p.getAge() <= 50);
+		System.out.println(result2);
+	}
+
+	private static <T> List<T> filter2(List<T> list, Predicate<T> predicate) {
+		List<T> result = new ArrayList<>();
+		for (T t : list) {
+			if (predicate.test(t)) {
+				result.add(t);
+			}
+		}
+		return result;
 	}
 
 	public interface PredicatePolicy<T> {
