@@ -45,10 +45,14 @@ public class Shop {
 		return futurePrice; // 계산 결과가 완료되길 기다리지 않고 Future을 반환한다.
 	}
 
+	public Future<Double> getPriceAsyncFatory(String product) {
+		return CompletableFuture.supplyAsync(() -> calculatePrice(product)); // 팩토리 메소드
+	}
+
 	public static void main(String[] args) {
 		Shop shop = new Shop("BestShop");
 		long start = System.nanoTime();
-		Future<Double> futurePrice = shop.getPriceAsync("my favorite product");
+		Future<Double> futurePrice = shop.getPriceAsyncFatory("my favorite product");
 		long invocationTime = ((System.nanoTime() - start) / 1_000_000);
 		System.out.println("Invocation returned after" + invocationTime + " msecs");
 
